@@ -10,7 +10,7 @@ const CardContainer = styled.div`
     -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
     display: inline-block;
     height: 200px;
-    margin: 0px;
+    margin: 0px 4px 0 0;
     overflow: hidden;
     position: relative;
     width: 200px;
@@ -37,32 +37,40 @@ export default class Card extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e) {
-    const card = this.props.info
-    console.log(card)
-    this.props.onClick(card)
+  handleClick() {
+    if (this.props.inHand){
+      const card = this.props
+      this.props.onClick(card.info)
+    }
   }
+
   render(){
-    return (
-      <CardContainer
-        onClick={this.handleClick}
-        id={this.props.info._id}
-        capturedBy={this.props.capturedBy}
-        value={this.props}
-      >
-        <CardImg src={ this.props.info.image } alt="card" />
-        <div className="values values--container">
-          <h2 className="value values--top">
-            { this.props.info.topValue }
-          </h2>
-          <h2 className="values--middle">
-            <span className="value">{ this.props.info.leftValue }</span>
-            <span className="value">{ this.props.info.rightValue }</span>
-          </h2>
-          <h2 className="value values--bottom">{ this.props.info.bottomValue }</h2>
-        </div>
-        <ShadowDiv  />
-      </CardContainer>
-    )
+    if (this.props.info) {
+      return (
+        <CardContainer
+          onClick={this.handleClick}
+          id={this.props.info._id}
+          value={this.props}
+        >
+          <CardImg src={ this.props.info.image } alt="card" />
+          <div className="values values--container">
+            <h2 className="value values--top">
+              { this.props.info.topValue }
+            </h2>
+            <h2 className="values--middle">
+              <span className="value">{ this.props.info.leftValue }</span>
+              <span className="value">{ this.props.info.rightValue }</span>
+            </h2>
+            <h2 className="value values--bottom">{ this.props.info.bottomValue }</h2>
+          </div>
+          <ShadowDiv  />
+        </CardContainer>
+      )
+  }
+    else {
+      return <div></div>
+    }
   }
 }
+
+
