@@ -4,13 +4,14 @@ import Card from './Card.js'
 
 
 const StyledSquare = styled.div`
-  background-color: darkgoldenrod;
-  border: 3px solid gold;
+  background-color: #b0bec5;
   border-radius: 5px;
   box-shadow: inset 0 0 10px rgba(0,0,0,.3);
   display:inline-block;
-  height: 220px;
-  width: 220px;
+  height: 250px;
+  width: 200px;
+  margin: 4px;
+  vertical-align: top;
 `
 
 const ShadowDiv = styled.div`
@@ -21,6 +22,7 @@ const ShadowDiv = styled.div`
   z-index: 999;
   top:0;
   left:0;
+  box-sizing: border-box;
 `
 
 export default class Square extends React.Component {
@@ -38,10 +40,11 @@ export default class Square extends React.Component {
     const card = this.props.card
     return (
       <StyledSquare
-        onClick={this.handleClick}
+        onClick={this.props.canClick ? this.handleClick:undefined}
         value={this.props}
+        className="tile--hover"
       >
-        { Object.keys(card) == 0 ? (<div></div>) :(<Card info={card} />) }
+        { Object.keys(card).length === 0 ? (<Card info={null} />) :(<Card info={card} />) }
         <ShadowDiv  />
       </StyledSquare>
     )

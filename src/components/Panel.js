@@ -1,12 +1,14 @@
 import React from 'react'
 import Card from './Card.js'
-import Characters from '../characters/Characters.js'
 import styled from 'styled-components'
+import Header from './Header.js'
+
 
 const StyledPanelContainer = styled.div`
-  width: 450px;
+  width: 425px;
   display: inline-block;
-  margin: 100px 15px 0;
+  margin: 0px 15px 0;
+  vertical-align: top;
 `
 
 export default class Panel extends React.Component {
@@ -22,31 +24,22 @@ export default class Panel extends React.Component {
   render() {
     return (
       <StyledPanelContainer>
-        <Card
-          inHand={true}
-          onClick={this.selectCard}
-          info={ Characters[1] }
+        <Header
+          displayText={this.props.displayText}
         />
-        <Card
-          inHand={true}
-          onClick={this.selectCard}
-          info={ Characters[1] }
-        />
-        <Card
-          inHand={true}
-          onClick={this.selectCard}
-          info={ Characters[2] }
-        />
-        <Card
-          inHand={true}
-          onClick={this.selectCard}
-          info={ Characters[4] }
-        />
-        <Card
-          inHand={true}
-          onClick={this.selectCard}
-          info={ Characters[5] }
-        />
+        {
+          this.props.hand && this.props.hand.map((card,i) =>
+            (<Card
+                hidden={this.props.hidden}
+                owner={this.props.playedBy}
+                inHand={true}
+                key={i}
+                onClick={this.props.canClick ? this.selectCard:undefined}
+                info={ card }
+                canClick={this.props.canClick}
+              />)
+          )
+        }
       </StyledPanelContainer>
     )
   }
